@@ -1,22 +1,46 @@
-from Plugboard import Plugboard
-import Rotor as rtr
-import Reflector as rfl
+import enigma
+import argparse
+import re
 
-rotor1 = rtr.createRotor("I", 25, 3)
-plugboard = Plugboard("AF EJ ZY")
-reflector = rfl.createReflector("B")
+def main():
+    # Creating the argument parser to handle the user inputting their settings
+    parser = argparse.ArgumentParser(description="Encrypts a text file using an implementation of the Enigma Machine")
+
+    # Adding the positional arguments needed to create the enigma machine
+    parser.add_argument("Rotors", help="""Select which 3 rotors, left to right, you want to be used. Given as a string of Roman Numerals: "I II III" """)
+    parser.add_argument("rPos", help="""Choose the Rotor's initial rotor position. Given as a string: "B X K" """)
+    parser.add_argument("rSet", help="""Setting the Ring Position of each Rotor. Given as a string: " V G T" """)
+    parser.add_argument("Reflector", help="""Choosing the reflector. Given as a string: "B" """)
+    parser.add_argument("Plugboard", help="""Setting Plugboard Wiring, with a max of 13 pairs. Given as a string of pairs: "AF HV ZI QF" """)
+    # Parsing Arguments into the program
+    args = parser.parse_args()
+
+    print("Chosen Rotors: " + args.Rotors)
+    print("Initial Rotor Positions: " + args.rPos)
+    print("Ring Settings: " + args.rSet)
+    print("Chosen Reflector: " + args.Reflector)
+    print("Plugboard Wiring: " + args.Plugboard)
+
+    # Creating an instance of the enigma machine, with our given settings, and doing any formatting as necerssary
+    enig = enigma.Enigma(re.split("[^a-zA-Z]", args.Rotors),
+                  splitChars(args.rPos),
+                  splitChars(args.rSet),
+                  args.Reflector,
+                  args.Plugboard)
+    
+
+# Small function for handling splitting up a string into an array, based on spaces, and then
+# converting it to an ASCII value, and subbing 65, to create a value between 0 - 25
+def splitChars(rPos):
+    # First we split the string into an array based on the first occurance of any alphabetical character
+    split = re.split("[^a-zA-Z]", rPos)
+
+    # Then we count over each item in split, convert it to ASCII, subtract 65 to get between 0 - 25, and
+    # then replacing it's value in the array
+    for i in range(len(split)):
+        split[i] = ord(split[i]) - 65
+    
+    return split
 
 
-b = plugboard.identityPlugboard()
-# c = plugboard.decodePlugboard("AF BG CH")
-
-# print(str(plugboard.forward("E")))
-
-print(rotor1.getName())
-print(rotor1.getPosition())
-d = rotor1.forward("A")
-print(d)
-rotor1.turnover()
-print(rotor1.forward(d))
-
-print(reflector.forward(d))
+main()
