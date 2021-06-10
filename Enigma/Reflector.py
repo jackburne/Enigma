@@ -18,9 +18,6 @@ class Reflector:
 
     # Method for enciphering a given character using the wiring array
     def forward(self, c):
-        print(self.fWiring)
-        print(c)
-        print(str(ord(c) - 65))
         return self.fWiring[ord(c) - 65]
 
 
