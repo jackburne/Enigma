@@ -2,10 +2,13 @@
 # II V III |   B C    |  7 4 19  |   12 2 20     | AF TV KO BL RW 
 import re
 
-
 class Plugboard:
     def __init__(self, connections):
         self.wiring = self.decodePlugboard(connections)
+    
+
+    def getWiring(self):
+        return self.wiring
     
 
     # Method for taking in the string of letter pairs and decoding
