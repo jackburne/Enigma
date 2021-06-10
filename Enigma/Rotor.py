@@ -1,4 +1,4 @@
-# Class for Rotor Wheels, 
+# Module for Rotor Wheels
 class Rotor:
     def __init__(self, name, wiring, rPos, nPos, rSetting):
         # Setting parameters for the rotor name, forward and backward wiring,
@@ -9,28 +9,6 @@ class Rotor:
         self.rPos = rPos
         self.nPos = nPos
         self.rSetting = rSetting
-    
-    
-    # # Method for picking one of the 6 Rotor Wheels, and it's initial position
-    # # ring settings
-    # def createRotor(name, rPos, rSetting):
-    #     # Bodged Case Switch that returns a Rotor Object depending on which of the 9
-    #     # available rotors is wanted, and will set it's initial Ring Position (rPos), 
-    #     # the Notch Position (nPos) and the Ring Setting (rSetting)
-    #     rotorList = {
-    #         "I": Rotor("I", "EKMFLGDQVZNTOWYHXUSPAIBRCJ", rPos, 16, rSetting),
-    #         "II": Rotor("II", "AJDKSIRUXBLHWTMCQGZNPYFVOE", rPos, 4, rSetting),
-    #         "III": Rotor("III", "BDFHJLCPRTXVZNYEIWGAKMUSQO", rPos, 21, rSetting),
-    #         "IV": Rotor("IV", "ESOVPZJAYQUIRHXLNFTGKDCMWB", rPos, 9, rSetting),
-    #         "V": Rotor("V", "VZBRGITYUPSDNHLXAWMJQOFECK", rPos, 25, rSetting),
-    #         # Rotor's 6, 7 and 8 all use 2 notch position, at 12 (M) and 25 (Z)
-    #         "VI": Rotor("VI", "JPGVOUMFYQBENHZRDKASXLICTW", rPos, 0, rSetting),
-    #         "VII": Rotor("VII", "NZJHGRCXMYSWBOUFAIVLPEKQDT", rPos, 0, rSetting),
-    #         "VIII": Rotor("VIII", "FKQHTLXOCBJSPDZRAMEWNIUYGV", rPos, 0, rSetting),
-    #         # Default Return
-    #         "Identity": Rotor("Identity", "ABCDEFGHIJKLMNOPQRSTUVWXYZ", rPos, 0, rSetting)
-    #     }
-    #     return rotorList.get(name, "Identity")
 
 
     # Returns which Rotor Wheel Number this is
@@ -69,9 +47,9 @@ class Rotor:
     # or backward)
     def encipher(self, k, rPos, rSetting, wireMap):
 
-        print(wireMap)
-        print("Ring Position:" + str(self.rPos))
-        print("Character At Ring Position: " + str(wireMap[self.rPos]))
+        # print(wireMap)
+        # print("Ring Position:" + str(self.rPos))
+        # print("Character At Ring Position: " + str(wireMap[self.rPos]))
 
         # Taking our given character and converting it to it's ASCII value - 65
         # so that it becomes a number between 0 - 25
@@ -83,7 +61,7 @@ class Rotor:
         print("Ring Position With Ring Setting Offset:" + str(rPosShift))
         # We return the character in the wiremap that is at out calculated Ring Position
         # including the ring setting (offset)
-        return wireMap[rPosShift]
+        return wireMap[kc + rPosShift]
 
 
     # Method for enciphering a letter "forwards", or right to left through the rotor
