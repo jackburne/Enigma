@@ -3,8 +3,8 @@ import Plugboard as pboard
 import Reflector as rfl
 
 # Module for creating an entire Enigma Machine. Needs to be given 5 strings: Which rotors
-# to use, as Roman Numberals (i.e. "I II III"), Initial Rotor Positions for each rotor,
-# (as 0, 15, 3), Ring Setting (as: 3, 25, 12), Which reflector (as: "B") and what Plugboard
+# to use, as Roman Numberals (i.e. ["I", "II", "III"]), Initial Rotor Positions for each rotor,
+# (as [0, 15, 3]), Ring Setting (as: [3, 25, 12]), Which reflector (as: "B") and what Plugboard
 # Connections (as "AF JE ZH GV")
 class Enigma():
     def __init__(self, rotors, ringPos, ringSet, reflector, plugboard):
@@ -16,7 +16,7 @@ class Enigma():
         # Creating the reflector panel
         self.reflector = rfl.createReflector(reflector)
         # Setting up Plugboard connections
-        self.plugboard = pboard(plugboard)
+        self.plugboard = pboard.Plugboard(plugboard)
     
 
     # Method for handling the rotation of the rotors
@@ -62,11 +62,11 @@ class Enigma():
 
     # Method for encrypting a whole string of charcters, returning the Cipher Text
     def encrypt(self, pText):
-       # String for storing our cipher text
-       cText = ""
-       # Enciphering each character in our string
-       for c in pText:
-           cText.join(self.encipher(c))
+        # String for storing our cipher text
+        cText = ""
+        # Enciphering each character in our string
+        for c in pText:
+            cText.join(self.encipher(c))
         
         # Returning the encrypted cipher text
         return cText
