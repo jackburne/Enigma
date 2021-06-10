@@ -32,4 +32,10 @@ In my version, I store the mappings as arrays, but instead of storing the numeri
 kc = int(ord(k) - 65)
 ```
 
-## Using Enigma
+## TODO
+
+- Check User Input to make sure they have entered valid settings
+- Allow plain text to be read in from a file
+- Allow settings to be read in from a file
+- Choose between encrypting from a file, or from a string argument
+- Decryption
