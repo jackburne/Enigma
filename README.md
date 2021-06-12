@@ -39,3 +39,4 @@ kc = int(ord(k) - 65)
 - Allow settings to be read in from a file
 - Choose between encrypting from a file, or from a string argument
 - Decryption
+- Implement methods for cracking Enigma
