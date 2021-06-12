@@ -29,8 +29,8 @@ class Enigma():
         
         # Next, we check if the right rotor is at it's notch
         if self.rRotor.isAtNotch():
-            mRotor.turnover()
-        
+            self.mRotor.turnover()
+
         # We then Rotate the right rotor
         self.rRotor.turnover()
     
@@ -42,19 +42,19 @@ class Enigma():
 
         # Then we pass our plain text character through the rotors right to left
         c1 = self.rRotor.forward(c)
-        c2 = self.mRotor.forward(c)
-        c3 = self.lRotor.forward(c)
+        c2 = self.mRotor.forward(c1)
+        c3 = self.lRotor.forward(c2)
 
         # The new character is then reflected
-        c4 = self.reflector.forward(c)
+        c4 = self.reflector.forward(c3)
 
         # Back through the rotors, left to right now, or "backwards"
-        c5 = self.lRotor.backward(c)
-        c6 = self.mRotor.backward(c)
-        c7 = self.rRotor.backward(c)
+        c5 = self.lRotor.backward(c4)
+        c6 = self.mRotor.backward(c5)
+        c7 = self.rRotor.backward(c6)
 
         # Lastly, we pass the character through the plugboard
-        c8 = self.plugboard.forward(c)
+        c8 = self.plugboard.forward(c7)
 
         # We then return the enciphered character
         return c8
@@ -66,8 +66,8 @@ class Enigma():
         cText = ""
         # Enciphering each character in our string
         for c in pText:
-            cText.join(self.encipher(c))
-        
+            cText = cText + (self.encipher(c))
+
         # Returning the encrypted cipher text
         return cText
 
