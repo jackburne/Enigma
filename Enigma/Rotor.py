@@ -1,7 +1,4 @@
 # Module for Rotor Wheels
-from re import L
-
-
 class Rotor:
     def __init__(self, name, wiring, rPos, nPos, rRing):
         # Setting parameters for the rotor name, forward and backward wiring,
@@ -22,7 +19,8 @@ class Rotor:
     # Returns Current Position of the rotor
     def getPosition(self):
         return self.rPos
-    
+
+    # Returns the rotor's ring setting
     def getRingSetting(self):
         return self.rRing
 
@@ -35,14 +33,6 @@ class Rotor:
         # our decoded array
         for char in wiring:
             dWires.append(char)
-        
-
-        # We then "rotate" the wiring around the ring by the Ring Setting. We do 
-        # this by popping the value at the start of the ring, at "A", and then
-        # appending it to the end of the Array, at "Z"
-        # for i in range(rRing):
-        #     tmp = dWires.pop(0)
-        #     dWires.append(chr(ord(tmp) + rRing))
 
         # Returning our new array
         return dWires
@@ -69,20 +59,18 @@ class Rotor:
         aOffset = k - rtrA.rPos
         # We then take that and add our current rotor's postion, to give us mapping input
         bInput = aOffset + self.rPos
-        # Before we map, we need to subtract the Ring Setting
+        # Before we map, we need to subtract the Ring Setting, and constrain to between 0 and 25
         mapInput = bInput - self.rRing
-
         mapInputConstrained = (mapInput + 26) % 26
 
+        # We look up our number in the wire mapping
         mapOutput = wireMap[mapInputConstrained]
 
         # We convert the mapping output to a number
         mapOutputChar = ord(mapOutput) - 65
 
-        # After the mapping, we need to ADD the ring offset
+        # After the mapping, we need to ADD the ring offset and constrain to 0 - 25
         mapOutput = mapOutputChar + self.rRing
-
-        # Before we return the character, we need to constrain it to be between 0 - 25
         mapOutputConstrained = (mapOutput + 26) % 26
 
         # Because we want to Return an ASCII character, we add 65 and then convert it
