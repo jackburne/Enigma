@@ -28,7 +28,7 @@ class Rotor:
 
 
     # Takes in the Rotor Wiring as a string and returns an array of that string
-    def decode(self, wiring, rRing):
+    def decode(self, wiring):
         # Creating an array to store the decoded string
         dWires = []
         # Looping over each character in the wiring string and pushing it to
@@ -59,24 +59,45 @@ class Rotor:
     # Method for enciphering a given letter, takes the character to encipher,
     # the current rotor position, the ring setting, and which wire mapping (forward
     # or backward)
-    def encipher(self, k, wireMap):
+    def encipher(self, k, wireMap, rtrA):
+        # We take our string character we want to encipher, and convert it to a number between
+        # 0 - 25, by converting to ASCII, and subtracting 65 (We are only dealing with capitals)
+        k = ord(k) - 65
 
-        
+        # First, we calculate the offset from the previous rotor, by taking our character
+        # we are enciphering, and subtract the previous rotor's current position
+        aOffset = k - rtrA.rPos
+        # We then take that and add our current rotor's postion, to give us mapping input
+        bInput = aOffset + self.rPos
+        # Before we map, we need to subtract the Ring Setting
+        mapInput = bInput - self.rRing
 
+        mapInputConstrained = (mapInput + 26) % 26
 
+        mapOutput = wireMap[mapInputConstrained]
 
+        # We convert the mapping output to a number
+        mapOutputChar = ord(mapOutput) - 65
 
+        # After the mapping, we need to ADD the ring offset
+        mapOutput = mapOutputChar + self.rRing
 
+        # Before we return the character, we need to constrain it to be between 0 - 25
+        mapOutputConstrained = (mapOutput + 26) % 26
+
+        # Because we want to Return an ASCII character, we add 65 and then convert it
+        # and return the new character
+        return chr(mapOutputConstrained + 65)
 
 
     # Method for enciphering a letter "forwards", or right to left through the rotor
-    def forward(self, c):
-        return self.encipher(c, self.fWiring)
+    def forward(self, c, rtrA):
+        return self.encipher(c, self.fWiring, rtrA)
 
 
     # Method for enciphering a letter "backwards", or left to right through the rotor
-    def backward(self, c):
-        return self.encipher(c, self.rPos, self.rRing, self.bWiring)
+    def backward(self, c, rtrA):
+        return self.encipher(c, self.rPos, self.bWiring, rtrA)
 
 
     # Method for checking if the rotor is at it's notch position, if it is, when we
