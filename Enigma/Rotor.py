@@ -1,11 +1,14 @@
 # Module for Rotor Wheels
+from re import L
+
+
 class Rotor:
     def __init__(self, name, wiring, rPos, nPos, rSetting):
         # Setting parameters for the rotor name, forward and backward wiring,
         # initial position, notch position and the ring setting
         self.name = name
-        self.fWiring = self.decode(wiring)
-        self.bWiring = self.inverseDecode(wiring)
+        self.fWiring = self.decode(wiring, rSetting)
+        self.bWiring = self.inverseDecode(wiring, rSetting)
         self.rPos = rPos
         self.nPos = nPos
         self.rSetting = rSetting
@@ -19,58 +22,91 @@ class Rotor:
     # Returns Current Position of the rotor
     def getPosition(self):
         return self.rPos
+    
+    def getRingSetting(self):
+        return self.rSetting
 
 
     # Takes in the Rotor Wiring as a string and returns an array of that string
-    def decode(self, wiring):
+    def decode(self, wiring, rSetting):
         # Creating an array to store the decoded string
         dWires = []
         # Looping over each character in the wiring string and pushing it to
         # our decoded array
         for char in wiring:
             dWires.append(char)
+        
+
+        # We then "rotate" the wiring around the ring by the Ring Setting. We do 
+        # this by popping the value at the start of the ring, at "A", and then
+        # appending it to the end of the Array, at "Z"
+        # for i in range(rSetting):
+        #     tmp = dWires.pop(0)
+        #     dWires.append(chr(ord(tmp) + rSetting))
 
         # Returning our new array
         return dWires
 
 
     # Inverting the wiring string and then decoding it
-    def inverseDecode(self, wiring):
+    def inverseDecode(self, wiring, rSetting):
         # Inverting the string
         invWires = wiring[::1]
         # Send off the string to be decoded to an array and then returning it
-        return self.decode(invWires)
+        return self.decode(invWires, rSetting)
 
 
     # Method for enciphering a given letter, takes the character to encipher,
     # the current rotor position, the ring setting, and which wire mapping (forward
     # or backward)
-    def encipher(self, k, rPos, rSetting, wireMap):
+    def encipher(self, k, wireMap):
 
-        # print(wireMap)
-        # print("Ring Position:" + str(self.rPos))
-        # print("Character At Ring Position: " + str(wireMap[self.rPos]))
+        # First, we add our Rotor Position Offset, and force the value between 0 and 25
+        kc = ((k + self.rPos) + 26) % 26
+        print("kc: " + str(kc))
 
-        # Taking our given character and converting it to it's ASCII value - 65
-        # so that it becomes a number between 0 - 25
-        kc = int(ord(k) - 65)
-        # Calculating the shift around the Rotor Wheel
-        # by taking the current position and subbing the
-        # ring setting
-        rPosShift = ((rPos + rSetting) + 26) % 26
-        print("Ring Position With Ring Setting Offset:" + str(rPosShift))
-        # We return the character in the wiremap that is at out calculated Ring Position
-        # including the ring setting (offset)
-        return wireMap[kc + rPosShift]
+        # We then find what value that maps too in our wire mapping array
+        kc2 = wireMap[kc]
+        # Next, we convert it to it's ASCII value and subtract 65, to make the value between
+        # 0 and 25, we then remove our Ring Setting offset, and force this new value to be
+        # between 0 and 25
+        kc3 = ((((ord(kc2) - 65) - self.rSetting) + 26) % 26)
+        
+        print(str(chr(kc3 + 65)))
+        # We then return the new character's number between 0 and 25
+        return kc3 - self.rPos
+
+
+
 
 
     # Method for enciphering a letter "forwards", or right to left through the rotor
     def forward(self, c):
-        return self.encipher(c, self.rPos, self.rSetting, self.fWiring)
+        # # Taking our given character and converting it to it's ASCII value - 65
+        # # so that it becomes a number between 0 - 25
+        # kc = int(ord(c) - 65)
+        # # Calculating the shift around the Rotor Wheel
+        # # by taking the current position and subbing the
+        # # ring setting
+        # rPosShift = ((self.rPos + self.rSetting) + 26) % 26
+        # # We return the character in the wiremap that is at out calculated Ring Position
+        # # including the ring setting (offset)
+        # return self.fWiring[((kc + rPosShift) + 26) % 26]
+
+        return self.encipher(c, self.fWiring)
 
 
     # Method for enciphering a letter "backwards", or left to right through the rotor
     def backward(self, c):
+
+        # # Finding the index of the "Left Side" of the Rotor for our letter
+        # charWiring = self.fWiring.index(c)
+
+        # rPosShift = ((self.rPos + self.rSetting) + 26) % 26
+
+        # return chr((charWiring + rPosShift) + 65)
+
+
         return self.encipher(c, self.rPos, self.rSetting, self.bWiring)
 
 
