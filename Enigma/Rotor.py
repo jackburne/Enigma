@@ -4,8 +4,8 @@ class Rotor:
         # Setting parameters for the rotor name, forward and backward wiring,
         # initial position, notch position and the ring setting
         self.name = name
-        self.fWiring = self.decode(wiring, rRing)
-        self.bWiring = self.inverseDecode(wiring, rRing)
+        self.fWiring = self.decode(wiring)
+        self.bWiring = self.inverseDecode(wiring)
         self.rPos = rPos
         self.nPos = nPos
         self.rRing = rRing
@@ -39,17 +39,22 @@ class Rotor:
 
 
     # Inverting the wiring string and then decoding it
-    def inverseDecode(self, wiring, rRing):
-        # Inverting the string
-        invWires = wiring[::1]
+    def inverseDecode(self, wiring):
+        invWires = ""
+        
+        # We loop over each character in our wiring string,
+        for char in wiring:
+            invWires += chr(self.fWiring.index(char) + 65)
+
         # Send off the string to be decoded to an array and then returning it
-        return self.decode(invWires, rRing)
+        return self.decode(invWires)
 
 
     # Method for enciphering a given letter, takes the character to encipher,
     # the current rotor position, the ring setting, and which wire mapping (forward
     # or backward)
     def encipher(self, k, wireMap, rtrA):
+        print(str(wireMap))
         # We take our string character we want to encipher, and convert it to a number between
         # 0 - 25, by converting to ASCII, and subtracting 65 (We are only dealing with capitals)
         k = ord(k) - 65
@@ -64,6 +69,7 @@ class Rotor:
         mapInputConstrained = (mapInput + 26) % 26
 
         # We look up our number in the wire mapping
+        print("Mapping Input Constrained is: " + str(mapInputConstrained))
         mapOutput = wireMap[mapInputConstrained]
 
         # We convert the mapping output to a number
@@ -85,7 +91,7 @@ class Rotor:
 
     # Method for enciphering a letter "backwards", or left to right through the rotor
     def backward(self, c, rtrA):
-        return self.encipher(c, self.rPos, self.bWiring, rtrA)
+        return self.encipher(c, self.bWiring, rtrA)
 
 
     # Method for checking if the rotor is at it's notch position, if it is, when we
