@@ -48,6 +48,8 @@ Function RtrB (Out_RtrA, WireMap, RtrA){
 
 ## TODO
 
+- Refactor Rotor Inverse Wires Decode, and Encipher functions
+
 - Check User Input to make sure they have entered valid settings
 - Allow plain text to be read in from a file
 - Allow settings to be read in from a file
