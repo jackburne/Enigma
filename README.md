@@ -32,6 +32,20 @@ In my version, I store the mappings as arrays, but instead of storing the numeri
 kc = int(ord(k) - 65)
 ```
 
+## Rotor Wheels
+```
+# Pseudo Code for Rotor Whleel Encoding
+Function RtrB (Out_RtrA, WireMap, RtrA){
+    offset = Out_RtrA - Position of RtrA
+    Input to RtrB = offset + Position of RtrB
+    character to map = Input to RtrB - RtrB Ring Setting
+
+    MAP Character
+
+    return Mapped Character - RtrB Ring Setting
+}
+```
+
 ## TODO
 
 - Check User Input to make sure they have entered valid settings
