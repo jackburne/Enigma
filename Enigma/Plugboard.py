@@ -119,3 +119,7 @@ class Plugboard:
         # by taking our Uppercase character "c", converting it to it's ASCII value, and
         # subtracting 65
         return chr((self.wiring[ord(c) - 65]) + 65)
+
+
+def createPlugboard(connections):    
+    return Plugboard(connections)
