@@ -50,35 +50,39 @@ import Rotor
 
 # main()
 
-etw = Rotor.createRotor("Identity", 0, 0)
-rtr1 = Rotor.createRotor("I", 11, 21)
-rtr2 = Rotor.createRotor("II", 24, 17)
-rtr3 = Rotor.createRotor("III", 18, 4)
+# etw = Rotor.createRotor("Identity", 0, 0)
+# rtr1 = Rotor.createRotor("I", 11, 21)
+# rtr2 = Rotor.createRotor("II", 24, 17)
+# rtr3 = Rotor.createRotor("III", 18, 4)
 
-print("###BEFORE ROTATION###")
-print("Rotor 1 Position: " + str(rtr1.getPosition()))
+# print("###BEFORE ROTATION###")
+# print("Rotor 1 Position: " + str(rtr1.getPosition()))
 
-rtr1.turnover()
+# rtr1.turnover()
 
-print("###AFTER ROTATION###")
-print("Rotor 1 Position: " + str(rtr1.getPosition()))
-a = rtr1.forward("A", etw)
-b = rtr2.forward(a, rtr1)
-c = rtr3.forward(b, rtr2)
+# print("###AFTER ROTATION###")
+# print("Rotor 1 Position: " + str(rtr1.getPosition()))
+# a = rtr1.forward("A", etw)
+# b = rtr2.forward(a, rtr1)
+# c = rtr3.forward(b, rtr2)
 
-print("Rotor 1 Output: " + a)
-print("Rotor 2 Output: " + b)
-print("Rotor 3 Output: " + c)
+# print("Rotor 1 Output: " + a)
+# print("Rotor 2 Output: " + b)
+# print("Rotor 3 Output: " + c)
 
 
-print("###Testing Rotors Backwards###")
+# print("###Testing Rotors Backwards###")
 
-print("###AFTER ROTATION###")
-print("Rotor 1 Position: " + str(rtr1.getPosition()))
-a = rtr3.backward("F", etw)
-b = rtr2.backward(a, rtr1)
-c = rtr1.backward(b, rtr2)
+# print("###AFTER ROTATION###")
+# print("Rotor 1 Position: " + str(rtr1.getPosition()))
+# a = rtr3.backward("F", etw)
+# b = rtr2.backward(a, rtr1)
+# c = rtr1.backward(b, rtr2)
 
-print("Rotor 3 Output: " + a)
-print("Rotor 2 Output: " + b)
-print("Rotor 1 Output: " + c)
+# print("Rotor 3 Output: " + a)
+# print("Rotor 2 Output: " + b)
+# print("Rotor 1 Output: " + c)
+
+machine = enigma.createEnigma("I II III", [11, 13, 15], [19, 20, 21], "B", "")
+
+print(machine.encrypt("AndrewIsATwat"))
