@@ -1,11 +1,13 @@
 import flask
+from flask import request
+from flask_cors import CORS
 import sys
 sys.path.insert(0, './Enigma')
 from Enigma import enigma
 
-from flask import request
 
 app = flask.Flask(__name__)
+CORS(app)
 
 @app.route('/', methods=['POST'])
 def defineConfig():
@@ -28,7 +30,15 @@ def defineConfig():
 
     machine = enigma.createEnigma(rotorIDList, rotorPositionList, rotorRingSettingList, reflector, plugboardString)
     ciphertext = machine.encrypt(plaintext)
-    return ciphertext
+
+    positions = machine.getRotorPositions()
+
+    diction = {
+        "ciphertext": ciphertext,
+        "positions": positions
+    }
+
+    return diction
 
 app.run()
 

@@ -1,6 +1,7 @@
 import Rotor as rtr
 import Plugboard as pboard
 import Reflector as rfl
+import json 
 
 # Module for creating an entire Enigma Machine. Needs to be given 5 strings: Which rotors
 # to use, as Roman Numberals (i.e. ["I", "II", "III"]), Initial Rotor Positions for each rotor,
@@ -86,6 +87,13 @@ class Enigma():
         # Returning the encrypted cipher text
         return cText
 
+    def getRotorPositions(self):
+        positions = {
+            self.rRotor.getName(): self.rRotor.getPosition(),
+            self.mRotor.getName(): self.mRotor.getPosition(),
+            self.lRotor.getName(): self.lRotor.getPosition()
+        }
+        return positions
 
 def createEnigma(rotors, ringPos, ringSet, reflector, plugboard):
     return Enigma(rotors, ringPos, ringSet, reflector, plugboard)
