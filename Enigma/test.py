@@ -1,7 +1,6 @@
 import enigma
 import argparse
 import re
-import Rotor
 
 # def main():
 #     # Creating the argument parser to handle the user inputting their settings
@@ -47,8 +46,9 @@ import Rotor
     
 #     return split
 
-
 # main()
+
+
 
 # etw = Rotor.createRotor("Identity", 0, 0)
 # rtr1 = Rotor.createRotor("I", 11, 21)
@@ -83,6 +83,8 @@ import Rotor
 # print("Rotor 2 Output: " + b)
 # print("Rotor 1 Output: " + c)
 
-machine = enigma.createEnigma("I II III", [11, 13, 15], [19, 20, 21], "B", "")
+machine = enigma.Enigma(["I", "II", "III"], [11, 13, 15], [19, 20, 21], "B", "AB CD EF GH IJ KL MN OP")
 
-print(machine.encrypt("AndrewIsATwat"))
+
+pText = "ANDREWISTWAT"
+print(machine.encrypt(pText))
