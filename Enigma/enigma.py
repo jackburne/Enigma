@@ -18,27 +18,17 @@ class Enigma():
         self.reflector = rfl.createReflector(reflector)
         # Setting up Plugboard connections
         self.plugboard = pboard.createPlugboard(plugboard)
-
+        # Creating an entry wheel rotor as a direct wiring, used at the start and end of the encipher method
         self.etw = rtr.createRotor("Identity", 0, 0)
     
 
     # Method for handling the rotation of the rotors
     def rotate(self):
-        # First we check if the middle rotor is at it's Notch,
-        # if it is, we double-step
-        # if self.mRotor.isAtNotch():
-        #     self.mRotor.turnover()
-        #     self.lRotor.turnover()
-        
-        # # Next, we check if the right rotor is at it's notch
-        # if self.rRotor.isAtNotch():
-        #     self.mRotor.turnover()
-
-        # # We then Rotate the right rotor
-        # self.rRotor.turnover()
-
+        # Rotation code that checks if we are at a notch, and rotates as required,
+        # also includes Double-Step error like the actual machine had
         if self.rRotor.isAtNotch():
             if self.mRotor.isAtNotch():
+                self.mRotor.turnover()
                 self.lRotor.turnover()
             self.mRotor.turnover()
         self.rRotor.turnover()
@@ -108,6 +98,3 @@ class Enigma():
             self.lRotor.getName(): self.lRotor.getPosition()
         }
         return positions
-
-# def createEnigma(rotors, ringPos, ringSet, reflector, plugboard):
-#     return Enigma(rotors, ringPos, ringSet, reflector, plugboard)
