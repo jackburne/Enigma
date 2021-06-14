@@ -6,9 +6,9 @@ class Rotor:
         self.name = name
         self.fWiring = self.decode(wiring)
         self.bWiring = self.inverseDecode(wiring)
-        self.rPos = rPos
-        self.nPos = nPos
-        self.rRing = rRing
+        self.rPos = int(rPos)
+        self.nPos = int(nPos)
+        self.rRing = int(rRing)
 
 
     # Returns which Rotor Wheel Number this is
