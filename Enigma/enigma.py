@@ -83,6 +83,17 @@ class Enigma():
         for c in pText:
             cText = cText + (self.encipher(c))
 
+        # spaced_cText = ""
+        # # Once we get our cipher text back, we split it up in 5 letter blocks by looping
+        # # through the cipher text,
+        # for c in cText:
+        #     # We add each letter to the a new string of spaced cipher text
+        #     spaced_cText = spaced_cText + cText(c)
+        #     # If we've gone past 5 letters,
+        #     if c % 5 == 0:
+        #         # We insert a space into our new text
+        #         spaced_cText = spaced_cText + " "
+
         # Returning the encrypted cipher text
         return cText
 
