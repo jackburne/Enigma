@@ -17,22 +17,31 @@ class Enigma():
         self.reflector = rfl.createReflector(reflector)
         # Setting up Plugboard connections
         self.plugboard = pboard.Plugboard(plugboard)
+
+        self.etw = rtr.createRotor("Identity", 0, 0)
     
 
     # Method for handling the rotation of the rotors
     def rotate(self):
         # First we check if the middle rotor is at it's Notch,
         # if it is, we double-step
-        if self.mRotor.isAtNotch():
-            self.mRotor.turnover()
-            self.lRotor.turnover()
+        # if self.mRotor.isAtNotch():
+        #     self.mRotor.turnover()
+        #     self.lRotor.turnover()
         
-        # Next, we check if the right rotor is at it's notch
-        if self.rRotor.isAtNotch():
-            self.mRotor.turnover()
+        # # Next, we check if the right rotor is at it's notch
+        # if self.rRotor.isAtNotch():
+        #     self.mRotor.turnover()
 
-        # We then Rotate the right rotor
+        # # We then Rotate the right rotor
+        # self.rRotor.turnover()
+
+        if self.rRotor.isAtNotch():
+            if self.mRotor.isAtNotch():
+                self.lRotor.turnover()
+            self.mRotor.turnover()
         self.rRotor.turnover()
+
     
 
     # Method for encrypting a single character, takes in the character as an argument 
@@ -40,21 +49,27 @@ class Enigma():
         # First we rotate the Rotors as necessary
         self.rotate()
 
+        plugboardOutput = self.plugboard.forward(c)
+
         # Then we pass our plain text character through the rotors right to left
-        c1 = self.rRotor.forward(c)
-        c2 = self.mRotor.forward(c1)
-        c3 = self.lRotor.forward(c2)
+        c1 = self.rRotor.forward(plugboardOutput, self.etw)
+        c2 = self.mRotor.forward(c1, self.rRotor)
+        c3 = self.lRotor.forward(c2, self.mRotor)
+
+        rotorOutput = self.etw.forward(c3, self.lRotor)
 
         # The new character is then reflected
-        c4 = self.reflector.forward(c3)
+        c4 = self.reflector.forward(rotorOutput)
 
         # Back through the rotors, left to right now, or "backwards"
-        c5 = self.lRotor.backward(c4)
-        c6 = self.mRotor.backward(c5)
-        c7 = self.rRotor.backward(c6)
+        c5 = self.lRotor.backward(c4, self.etw)
+        c6 = self.mRotor.backward(c5, self.lRotor)
+        c7 = self.rRotor.backward(c6, self.mRotor)
+
+        rotorOutput = self.etw.backward(c7, self.rRotor)
 
         # Lastly, we pass the character through the plugboard
-        c8 = self.plugboard.forward(c7)
+        c8 = self.plugboard.forward(rotorOutput)
 
         # We then return the enciphered character
         return c8
@@ -71,3 +86,6 @@ class Enigma():
         # Returning the encrypted cipher text
         return cText
 
+
+def createEnigma(rotors, ringPos, ringSet, reflector, plugboard):
+    return Enigma(rotors, ringPos, ringSet, reflector, plugboard)
