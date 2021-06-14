@@ -17,28 +17,18 @@ class Enigma():
         # Creating the reflector panel
         self.reflector = rfl.createReflector(reflector)
         # Setting up Plugboard connections
-        self.plugboard = pboard.Plugboard(plugboard)
-
+        self.plugboard = pboard.createPlugboard(plugboard)
+        # Creating an entry wheel rotor as a direct wiring, used at the start and end of the encipher method
         self.etw = rtr.createRotor("Identity", 0, 0)
     
 
     # Method for handling the rotation of the rotors
     def rotate(self):
-        # First we check if the middle rotor is at it's Notch,
-        # if it is, we double-step
-        # if self.mRotor.isAtNotch():
-        #     self.mRotor.turnover()
-        #     self.lRotor.turnover()
-        
-        # # Next, we check if the right rotor is at it's notch
-        # if self.rRotor.isAtNotch():
-        #     self.mRotor.turnover()
-
-        # # We then Rotate the right rotor
-        # self.rRotor.turnover()
-
+        # Rotation code that checks if we are at a notch, and rotates as required,
+        # also includes Double-Step error like the actual machine had
         if self.rRotor.isAtNotch():
             if self.mRotor.isAtNotch():
+                self.mRotor.turnover()
                 self.lRotor.turnover()
             self.mRotor.turnover()
         self.rRotor.turnover()
@@ -84,19 +74,22 @@ class Enigma():
         for c in pText:
             cText = cText + (self.encipher(c))
 
-        # spaced_cText = ""
-        # # Once we get our cipher text back, we split it up in 5 letter blocks by looping
-        # # through the cipher text,
-        # for c in cText:
-        #     # We add each letter to the a new string of spaced cipher text
-        #     spaced_cText = spaced_cText + cText(c)
-        #     # If we've gone past 5 letters,
-        #     if c % 5 == 0:
-        #         # We insert a space into our new text
-        #         spaced_cText = spaced_cText + " "
+        spaced_cText = ""
+        count = 0
+        # Once we get our cipher text back, we split it up in 5 letter blocks by looping
+        # through the cipher text,
+        for c in cText:
+            count += 1
+            # We add each letter to the a new string of spaced cipher text
+            spaced_cText = spaced_cText + c
+            # If we've gone past 5 letters,
+
+            if count % 5 == 0:
+                # We insert a space into our new text
+                spaced_cText += " "
 
         # Returning the encrypted cipher text
-        return cText
+        return spaced_cText
 
     def getRotorPositions(self):
         positions = {
@@ -105,6 +98,3 @@ class Enigma():
             self.lRotor.getName(): self.lRotor.getPosition()
         }
         return positions
-
-def createEnigma(rotors, ringPos, ringSet, reflector, plugboard):
-    return Enigma(rotors, ringPos, ringSet, reflector, plugboard)
