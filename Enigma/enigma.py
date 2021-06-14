@@ -17,7 +17,7 @@ class Enigma():
         # Creating the reflector panel
         self.reflector = rfl.createReflector(reflector)
         # Setting up Plugboard connections
-        self.plugboard = pboard.Plugboard(plugboard)
+        self.plugboard = pboard.createPlugboard(plugboard)
 
         self.etw = rtr.createRotor("Identity", 0, 0)
     
@@ -84,19 +84,22 @@ class Enigma():
         for c in pText:
             cText = cText + (self.encipher(c))
 
-        # spaced_cText = ""
-        # # Once we get our cipher text back, we split it up in 5 letter blocks by looping
-        # # through the cipher text,
-        # for c in cText:
-        #     # We add each letter to the a new string of spaced cipher text
-        #     spaced_cText = spaced_cText + cText(c)
-        #     # If we've gone past 5 letters,
-        #     if c % 5 == 0:
-        #         # We insert a space into our new text
-        #         spaced_cText = spaced_cText + " "
+        spaced_cText = ""
+        count = 0
+        # Once we get our cipher text back, we split it up in 5 letter blocks by looping
+        # through the cipher text,
+        for c in cText:
+            count += 1
+            # We add each letter to the a new string of spaced cipher text
+            spaced_cText = spaced_cText + c
+            # If we've gone past 5 letters,
+
+            if count % 5 == 0:
+                # We insert a space into our new text
+                spaced_cText += " "
 
         # Returning the encrypted cipher text
-        return cText
+        return spaced_cText
 
     def getRotorPositions(self):
         positions = {
@@ -106,5 +109,5 @@ class Enigma():
         }
         return positions
 
-def createEnigma(rotors, ringPos, ringSet, reflector, plugboard):
-    return Enigma(rotors, ringPos, ringSet, reflector, plugboard)
+# def createEnigma(rotors, ringPos, ringSet, reflector, plugboard):
+#     return Enigma(rotors, ringPos, ringSet, reflector, plugboard)
