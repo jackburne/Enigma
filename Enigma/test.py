@@ -12,6 +12,10 @@ def main():
     parser.add_argument("rSet", help="""Setting the Ring Position of each Rotor. Given as a string: " V G T" """)
     parser.add_argument("Reflector", help="""Choosing the reflector. Given as a string: "B" """)
     parser.add_argument("Plugboard", help="""Setting Plugboard Wiring, with a max of 13 pairs. Given as a string of pairs: "AF HV ZI QF" """)
+
+    # Positional Arguments
+    parser.add_argument("-rf", "--readfile", help="Reads in Cipher Text from a specified file", type=str)
+    parser.add_argument("-wf", "--writefile", help="Writes the output of the machine to a specified file", type=str)
     # Parsing Arguments into the program
     args = parser.parse_args()
 
