@@ -12,6 +12,11 @@ def main():
     parser.add_argument("rSet", help="""Setting the Ring Position of each Rotor. Given as a string: " V G T" """)
     parser.add_argument("Reflector", help="""Choosing the reflector. Given as a string: "B" """)
     parser.add_argument("Plugboard", help="""Setting Plugboard Wiring, with a max of 13 pairs. Given as a string of pairs: "AF HV ZI QF" """)
+
+    # Adding Optional Arguments
+    parser.add_argument("-rf", "--readfile", help="Read plain text from a given file")
+    parser.add_argument("-wf", "--writefile", help="Writes the output cipher text to a file of a given name")
+    parser.add_argument("-")
     # Parsing Arguments into the program
     args = parser.parse_args()
 
@@ -45,6 +50,7 @@ def splitChars(rPos):
         split[i] = ord(split[i]) - 65
     
     return split
+
 
 main()
 
