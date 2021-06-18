@@ -1,7 +1,7 @@
 import Rotor as rtr
 import Plugboard as pboard
 import Reflector as rfl
-import json 
+import re
 
 # Module for creating an entire Enigma Machine. Needs to be given 5 strings: Which rotors
 # to use, as Roman Numberals (i.e. ["I", "II", "III"]), Initial Rotor Positions for each rotor,
@@ -68,6 +68,8 @@ class Enigma():
 
     # Method for encrypting a whole string of charcters, returning the Cipher Text
     def encrypt(self, pText):
+        # First we sanitise the User input
+        pText = self.sanitiseInput(pText)
         # String for storing our cipher text
         cText = ""
         # Enciphering each character in our string
@@ -90,7 +92,34 @@ class Enigma():
 
         # Returning the encrypted cipher text
         return spaced_cText
+    
 
+    # Method for checking user input before we encrypt it
+    def sanitiseInput(self, pText):
+        # Forcing all letters to be uppercase
+        s1 = pText.upper()
+        # Remove any spaces in the text
+        s2 = s1.strip()
+        s3 = s2.replace(" ", "")
+        # Converting over "." characters to the word "STOP", as it would be in Morse Code
+        s4 = s3.replace(".", "STOP")
+
+        # Checking that our plain text now only contains upper case letters
+        anyNonCaps = re.findall("[^A-Z]", s4)
+        # If it contains anything else, we alert the User that we are removing them
+        if anyNonCaps != None:
+            print("Plain text contains non-alphabetical characters!!!")
+            print("Removing non-alphabetical characters...")
+            # For each instance of a non-alphabetical character, we replace it with ""
+            for i in anyNonCaps:
+                s4 = s4.replace(i, "")
+
+        print("Sanitised Input: " + s4)
+
+        return(s4)
+
+
+    # Method for returning the Machine's current Rotor Positions
     def getRotorPositions(self):
         positions = {
             self.rRotor.getName(): self.rRotor.getPosition(),

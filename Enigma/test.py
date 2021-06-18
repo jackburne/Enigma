@@ -13,10 +13,16 @@ def main():
     parser.add_argument("Reflector", help="""Choosing the reflector. Given as a string: "B" """)
     parser.add_argument("Plugboard", help="""Setting Plugboard Wiring, with a max of 13 pairs. Given as a string of pairs: "AF HV ZI QF" """)
 
+<<<<<<< HEAD
     # Adding Optional Arguments
     parser.add_argument("-rf", "--readfile", help="Read plain text from a given file")
     parser.add_argument("-wf", "--writefile", help="Writes the output cipher text to a file of a given name")
     parser.add_argument("-")
+=======
+    # Positional Arguments
+    parser.add_argument("-rf", "--readfile", help="Reads in Cipher Text from a specified file", type=str)
+    parser.add_argument("-wf", "--writefile", help="Writes the output of the machine to a specified file", type=str)
+>>>>>>> 857aef3a91eacd9dbada712ed0e3f799dab843e9
     # Parsing Arguments into the program
     args = parser.parse_args()
 
@@ -34,8 +40,15 @@ def main():
                   args.Plugboard)
 
     print("encrypting hard coded text...")
+<<<<<<< HEAD
     print(enig.encrypt("AAAAA"))
     print("Finished Encryption...")
+=======
+    a = enig.encrypt("A Aa Aa.#")
+    print(a)
+    print(enig.encrypt(a))
+    print("Finished Tests...")
+>>>>>>> 857aef3a91eacd9dbada712ed0e3f799dab843e9
     
 
 # Small function for handling splitting up a string into an array, based on spaces, and then
@@ -51,11 +64,20 @@ def splitChars(rPos):
     
     return split
 
+<<<<<<< HEAD
 
 main()
+=======
+main()
+
+>>>>>>> 857aef3a91eacd9dbada712ed0e3f799dab843e9
 
 # machine = enigma.Enigma(["I", "II", "III"], [11, 13, 15], [19, 20, 21], "B", "AB CD EF GH IJ KL MN OP")
 
 
+<<<<<<< HEAD
 # pText = "ANDREWISTWAT"
+=======
+# pText = "ANDREWISATWAT"
+>>>>>>> 857aef3a91eacd9dbada712ed0e3f799dab843e9
 # print(machine.encrypt(pText))
