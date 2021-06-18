@@ -33,8 +33,10 @@ def main():
                   args.Plugboard)
 
     print("encrypting hard coded text...")
-    print(enig.encrypt("AAAAA"))
-    print("Finished Encryption...")
+    a = enig.encrypt("A Aa Aa.#")
+    print(a)
+    print(enig.encrypt(a))
+    print("Finished Tests...")
     
 
 # Small function for handling splitting up a string into an array, based on spaces, and then
