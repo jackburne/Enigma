@@ -24,6 +24,7 @@ class Reflector:
 # Function for creating a reflector
 def createReflector(name):
     reflectorList = {
+        # Regular M3 Enigma Reflectors
         "B": Reflector("YRUHQSLDPXNGOKMIEBFZCWVJAT"),
         "C": Reflector("FVPJIAOYEDRZXWGCTKUQSBNMHL"),
         # Kriegsmarine M4 "Thin" Reflectors

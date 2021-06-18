@@ -1,7 +1,6 @@
 import enigma
 import argparse
 import re
-import Rotor
 
 # def main():
 #     # Creating the argument parser to handle the user inputting their settings
@@ -47,38 +46,45 @@ import Rotor
     
 #     return split
 
-
 # main()
 
-etw = Rotor.createRotor("Identity", 0, 0)
-rtr1 = Rotor.createRotor("I", 11, 21)
-rtr2 = Rotor.createRotor("II", 24, 17)
-rtr3 = Rotor.createRotor("III", 18, 4)
-
-print("###BEFORE ROTATION###")
-print("Rotor 1 Position: " + str(rtr1.getPosition()))
-
-rtr1.turnover()
-
-print("###AFTER ROTATION###")
-print("Rotor 1 Position: " + str(rtr1.getPosition()))
-a = rtr1.forward("A", etw)
-b = rtr2.forward(a, rtr1)
-c = rtr3.forward(b, rtr2)
-
-print("Rotor 1 Output: " + a)
-print("Rotor 2 Output: " + b)
-print("Rotor 3 Output: " + c)
 
 
-print("###Testing Rotors Backwards###")
+# etw = Rotor.createRotor("Identity", 0, 0)
+# rtr1 = Rotor.createRotor("I", 11, 21)
+# rtr2 = Rotor.createRotor("II", 24, 17)
+# rtr3 = Rotor.createRotor("III", 18, 4)
 
-print("###AFTER ROTATION###")
-print("Rotor 1 Position: " + str(rtr1.getPosition()))
-a = rtr3.backward("F", etw)
-b = rtr2.backward(a, rtr1)
-c = rtr1.backward(b, rtr2)
+# print("###BEFORE ROTATION###")
+# print("Rotor 1 Position: " + str(rtr1.getPosition()))
 
-print("Rotor 3 Output: " + a)
-print("Rotor 2 Output: " + b)
-print("Rotor 1 Output: " + c)
+# rtr1.turnover()
+
+# print("###AFTER ROTATION###")
+# print("Rotor 1 Position: " + str(rtr1.getPosition()))
+# a = rtr1.forward("A", etw)
+# b = rtr2.forward(a, rtr1)
+# c = rtr3.forward(b, rtr2)
+
+# print("Rotor 1 Output: " + a)
+# print("Rotor 2 Output: " + b)
+# print("Rotor 3 Output: " + c)
+
+
+# print("###Testing Rotors Backwards###")
+
+# print("###AFTER ROTATION###")
+# print("Rotor 1 Position: " + str(rtr1.getPosition()))
+# a = rtr3.backward("F", etw)
+# b = rtr2.backward(a, rtr1)
+# c = rtr1.backward(b, rtr2)
+
+# print("Rotor 3 Output: " + a)
+# print("Rotor 2 Output: " + b)
+# print("Rotor 1 Output: " + c)
+
+machine = enigma.Enigma(["I", "II", "III"], [11, 13, 15], [19, 20, 21], "B", "AB CD EF GH IJ KL MN OP")
+
+
+pText = "ANDREWISTWAT"
+print(machine.encrypt(pText))
