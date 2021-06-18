@@ -97,26 +97,26 @@ class Enigma():
     # Method for checking user input before we encrypt it
     def sanitiseInput(self, pText):
         # Forcing all letters to be uppercase
-        s1 = pText.upper()
+        pText = pText.upper()
         # Remove any spaces in the text
-        s2 = s1.strip()
-        s3 = s2.replace(" ", "")
+        pText = pText.strip()
+        pText = pText.replace(" ", "")
         # Converting over "." characters to the word "STOP", as it would be in Morse Code
-        s4 = s3.replace(".", "STOP")
+        pText = pText.replace(".", "STOP")
 
         # Checking that our plain text now only contains upper case letters
-        anyNonCaps = re.findall("[^A-Z]", s4)
+        anyNonCaps = re.findall("[^A-Z]", pText)
         # If it contains anything else, we alert the User that we are removing them
         if anyNonCaps != None:
             print("Plain text contains non-alphabetical characters!!!")
             print("Removing non-alphabetical characters...")
             # For each instance of a non-alphabetical character, we replace it with ""
             for i in anyNonCaps:
-                s4 = s4.replace(i, "")
+                pText = pText.replace(i, "")
 
-        print("Sanitised Input: " + s4)
+        print("Sanitised Input: " + pText)
 
-        return(s4)
+        return(pText)
 
 
     # Method for returning the Machine's current Rotor Positions
