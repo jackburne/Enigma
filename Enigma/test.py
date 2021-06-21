@@ -26,15 +26,11 @@ def main():
                   splitChars(args.rSet),
                   args.Reflector,
                   args.Plugboard)
-    
-    print("-rf contents: " + args.readfile)
-    print("-wf contents: " + args.writefile)
 
     # Checking if the User wanted to read in the plain text from a file
     if args.readfile == "":
         print("No Plain Text file specified, attempting to read from plaintext.txt...")
         pText = getpText('plaintext.txt')
-        print("Plain Text is: " + pText)
         if pText == "":
             print("Nothing found in plaintext.txt!")
 
@@ -44,9 +40,12 @@ def main():
         if os.path.exists(args.readfile):
             # If we are, we read in the values from the text
             pText = getpText(args.readfile)
+    
+    print("Plain Text is: " + pText)
 
     # Running our plain text through the machine 
     cText = enig.encrypt(pText)
+    print("Encrypted Plain Text!")
 
     if args.writefile == "":
         print("No Output file specified, attempting to write to ciphertext.txt...")
@@ -59,10 +58,12 @@ def main():
     elif args.writefile != None:
         # Validating the output filepath
         # if validateFileName(args.writefile, validFilePath):
-        if os.path.exists(args.writefile):
-            # Trying to write the file
-            if writecText(cText, args.writefile):
-                print("Written cipher text to: " + str(args.writefile))
+        # if os.path.exists(args.writefile):
+        # Trying to write the file
+        if writecText(cText, args.writefile):
+            print("Written cipher text to: " + str(args.writefile))
+        else:
+            print("Error writing to: " + str(args.writefile))
     
 
 # Function for getting the plain text from a text file
