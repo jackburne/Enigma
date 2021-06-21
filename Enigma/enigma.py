@@ -107,7 +107,7 @@ class Enigma():
         # Checking that our plain text now only contains upper case letters
         anyNonCaps = re.findall("[^A-Z]", pText)
         # If it contains anything else, we alert the User that we are removing them
-        if anyNonCaps != None:
+        if len(anyNonCaps) != 0:
             print("Plain text contains non-alphabetical characters!!!")
             print("Removing non-alphabetical characters...")
             # For each instance of a non-alphabetical character, we replace it with ""
